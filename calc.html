@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora com Verificação</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    input, button {
+      font-size: 18px;
+      margin: 5px;
+      padding: 8px;
+    }
+
+    #resultado {
+      margin-top: 15px;
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Calculadora</h1>
+
+  <input type="number" id="num1" placeholder="Número 1">
+  <input type="text" id="operador" placeholder="Operador (+ - * /)" maxlength="1">
+  <input type="number" id="num2" placeholder="Número 2">
+  <br>
+  <button onclick="calcular()">Calcular</button>
+
+  <div id="resultado">Resultado: </div>
+
+  <script>
+    function calcular() {
+      const n1 = parseFloat(document.getElementById('num1').value);
+      const n2 = parseFloat(document.getElementById('num2').value);
+      const op = document.getElementById('operador').value.trim();
+      let resultado;
+
+      if (isNaN(n1) || isNaN(n2)) {
+        resultado = "Erro: insira dois números válidos.";
+      } else {
+        switch (op) {
+          case '+':
+            resultado = n1 + n2;
+            break;
+          case '-':
+            resultado = n1 - n2;
+            break;
+          case '*':
+            resultado = n1 * n2;
+            break;
+          case '/':
+            resultado = n2 !== 0 ? n1 / n2 : "Erro: divisão por zero.";
+            break;
+          default:
+            resultado = "Erro: operador inválido. Use +, -, * ou /.";
+        }
+      }
+
+      document.getElementById('resultado').innerText = "Resultado: " + resultado;
+    }
+  </script>
+
+</body>
+</html>
