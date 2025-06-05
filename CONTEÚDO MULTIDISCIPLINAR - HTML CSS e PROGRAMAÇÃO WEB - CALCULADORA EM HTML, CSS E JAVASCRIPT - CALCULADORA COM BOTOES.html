@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora com Botões</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    #tela {
+      width: 240px;
+      height: 40px;
+      font-size: 22px;
+      margin-bottom: 10px;
+      padding: 5px;
+      text-align: right;
+    }
+
+    .botao {
+      width: 60px;
+      height: 40px;
+      font-size: 20px;
+      margin: 2px;
+    }
+
+    #resultado {
+      margin-top: 15px;
+      font-size: 22px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Calculadora com Botões</h1>
+  <input type="text" id="tela" disabled />
+  <br>
+
+  <button class="botao" onclick="clicar('7')">7</button>
+  <button class="botao" onclick="clicar('8')">8</button>
+  <button class="botao" onclick="clicar('9')">9</button>
+  <button class="botao" onclick="clicar('/')">/</button><br>
+
+  <button class="botao" onclick="clicar('4')">4</button>
+  <button class="botao" onclick="clicar('5')">5</button>
+  <button class="botao" onclick="clicar('6')">6</button>
+  <button class="botao" onclick="clicar('*')">*</button><br>
+
+  <button class="botao" onclick="clicar('1')">1</button>
+  <button class="botao" onclick="clicar('2')">2</button>
+  <button class="botao" onclick="clicar('3')">3</button>
+  <button class="botao" onclick="clicar('-')">-</button><br>
+
+  <button class="botao" onclick="clicar('0')">0</button>
+  <button class="botao" onclick="clicar('.')">.</button>
+  <button class="botao" onclick="calcular()">=</button>
+  <button class="botao" onclick="clicar('+')">+</button><br>
+
+  <button class="botao" onclick="limpar()">C</button>
+
+  <div id="resultado">Resultado:</div>
+
+  <script>
+    let expressao = "";
+
+    function clicar(valor) {
+      expressao += valor;
+      document.getElementById("tela").value = expressao;
+    }
+
+    function limpar() {
+      expressao = "";
+      document.getElementById("tela").value = "";
+      document.getElementById("resultado").innerText = "Resultado:";
+    }
+
+    function calcular() {
+      try {
+        const match = expressao.match(/^([-]?\d+(\.\d+)?)([\+\-\*\/])([-]?\d+(\.\d+)?)$/);
+
+        if (!match) {
+          document.getElementById("resultado").innerText = "Erro: expressão inválida";
+          return;
+        }
+
+        const num1 = parseFloat(match[1]);
+        const operador = match[3];
+        const num2 = parseFloat(match[4]);
+        let resultado;
+
+        switch (operador) {
+          case '+':
+            resultado = num1 + num2;
+            break;
+          case '-':
+            resultado = num1 - num2;
+            break;
+          case '*':
+            resultado = num1 * num2;
+            break;
+          case '/':
+            resultado = num2 !== 0 ? num1 / num2 : "Erro: divisão por zero";
+            break;
+        }
+
+        document.getElementById("resultado").innerText = "Resultado: " + resultado;
+        expressao = resultado.toString();
+        document.getElementById("tela").value = expressao;
+
+      } catch (e) {
+        document.getElementById("resultado").innerText = "Erro de cálculo";
+      }
+    }
+  </script>
+
+</body>
+</html>
